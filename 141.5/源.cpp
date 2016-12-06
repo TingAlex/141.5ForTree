@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<queue>
 #include<stack>
 using namespace std;
@@ -300,7 +300,7 @@ public:
 			return 1;
 		}
 		int main() {
-			//½¨Á¢Ò»¸öÊ÷
+			//å»ºç«‹ä¸€ä¸ªæ ‘ã€‚
 			BinaryTreeNode<int> *GrandPa = new BinaryTreeNode<int>;
 			GrandPa->setValue(1);
 			BinaryTreeNode<int> *Father = new BinaryTreeNode<int>;
@@ -336,9 +336,9 @@ public:
 			}
 			else
 				cout << "No" << endl;
-			//Í³¼Æ¶ÈÊý
+			//ç»Ÿè®¡åº¦æ•°
 			tree.showDu();
-			//¼ÆËã¸ß¶È
+			//è®¡ç®—é«˜åº¦
 			int i = hight(GrandPa);
 			cout << "hight is " << i << endl;
 			int *arr = new int[i];
