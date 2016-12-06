@@ -299,6 +299,45 @@ public:
 			}
 			return 1;
 		}
+		template<class T>
+		bool ComplateTree2(BinaryTreeNode<T>* root)
+		{
+			int flag = 0;
+			if (!root)
+				return true;
+			else {
+				queue<BinaryTreeNode<T>*> qe;
+				qe.push(root);
+				while (!qe.empty()) {
+					BinaryTreeNode<T>* pointer = qe.front();
+					qe.pop();
+					if (flag == 1) {
+						if (pointer->getLeftChild() != NULL)
+							return false;
+						if (pointer->getRightChild() != NULL)
+							return false;
+					}
+					if (flag == 0) {
+						if (pointer->getLeftChild() != NULL)
+							qe.push(pointer->getLeftChild());
+						else
+							flag = 1;
+						
+					}
+					if (flag == 1) {
+						if (pointer->getRightChild() != NULL)
+							return false;
+					}
+					if (flag == 0) {
+						if (pointer->getRightChild() != NULL)
+							qe.push(pointer->getRightChild());
+						else
+							flag = 1;
+					}
+				}
+				return true;
+			}
+		}
 		int main() {
 			//建立一个树。
 			BinaryTreeNode<int> *GrandPa = new BinaryTreeNode<int>;
@@ -331,7 +370,7 @@ public:
 			cout << endl;
 			//pan duan wan quan
 			cout << "Is it a complete tree?" << endl;
-			if (ComplateTree(GrandPa)) {
+			if (ComplateTree2(GrandPa)) {
 				cout << "Yes" << endl;
 			}
 			else
@@ -368,7 +407,7 @@ public:
 			cout << endl;
 			//pan duan wan quan
 			cout << "Is it a complete tree?" << endl;
-			if (ComplateTree(GrandPa)) {
+			if (ComplateTree2(GrandPa)) {
 				cout << "Yes" << endl;
 			}
 			else
