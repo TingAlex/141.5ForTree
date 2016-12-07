@@ -113,12 +113,30 @@ public:
 			preOrder(root->getRightChild());
 		}
 	}
+	//前序遍历
 	void preOrderForShow(BinaryTreeNode<T>* root) {
 		if (root != NULL) {
 			cout << root->getValue();
 			preOrderForShow(root->getLeftChild());
 			preOrderForShow(root->getRightChild());
 		}
+	}
+	//前序递归非遍历
+	void PreOrderWithoutRecusion(BinaryTreeNode<T>* root) {
+		stack<BinaryTreeNode<T>*> q;
+		BinaryTreeNode<T> *r = root;
+		q.push(root);
+		while (!q.empty())
+		{
+			r = q.top();
+			cout << r->getValue();
+			q.pop();
+			if (r->getRightChild() != NULL)
+				q.push(r->getRightChild());
+			if (r->getLeftChild() != NULL)
+				q.push(r->getLeftChild());
+		}
+
 	}
 	void preOrderDel(BinaryTreeNode<T>* root) {
 		if (root != NULL) {
@@ -133,6 +151,7 @@ public:
 			preOrderDel(root->getRightChild());
 		}
 	}
+	
 	void inOrder(BinaryTreeNode<T>* root, int i, int *arr) {
 		int temp = i + 1;
 		if (root != NULL) {
@@ -141,11 +160,47 @@ public:
 			inOrder(root->getRightChild(), temp, arr);
 		}
 	}
+	//中序遍历
+	void inOrderForShow(BinaryTreeNode<T>* root) {
+		if (root != NULL) {
+			inOrderForShow(root->getLeftChild());
+			cout<<root->getValue();
+			inOrderForShow(root->getRightChild());
+		}
+	}
+	//中序遍历非递归
+	void InOrderWithoutRecusion(BinaryTreeNode<T>* root) {
+		stack<BinaryTreeNode<T>*> q;
+		BinaryTreeNode<T> *r = root;
+		while (!q.empty() || r)
+		{
+			if (r)
+			{
+				q.push(r);
+				r = r->getLeftChild();
+			}
+			else
+			{
+				r = q.top();
+				cout << r->getValue();
+				r = r->getRightChild();
+				q.pop();
+			}
+		}
+	}
 	void postOrder(BinaryTreeNode<T>* root) {
 		if (root != NULL) {
 			postOrder(root->getLeftChild());
 			postOrder(root->getRightChild());
 			change(root);
+		}
+	}
+	//后序遍历
+	void postOrderForShow(BinaryTreeNode<T>* root) {
+		if (root != NULL) {
+			postOrderForShow(root->getLeftChild());
+			postOrderForShow(root->getRightChild());
+			cout<<root->getValue();
 		}
 	}
 	void change(BinaryTreeNode<T>* root) {
@@ -167,8 +222,8 @@ public:
 			du2++;
 		}
 	}
+	//广度优先遍历
 	void levelOrder(BinaryTreeNode<T>* root) {
-		int flag = 0;
 		queue<BinaryTreeNode<T>*> nodeQueue;
 		BinaryTreeNode<T>* pointer = root;
 		if (pointer) {
@@ -177,6 +232,7 @@ public:
 		while (!nodeQueue.empty()) {
 			pointer = nodeQueue.front();
 			visit(pointer);
+			cout << pointer->getValue();
 			nodeQueue.pop();
 			if (pointer->getLeftChild()) {
 				nodeQueue.push(pointer->getLeftChild());
@@ -186,19 +242,18 @@ public:
 			}
 		}
 	}
-	void PostOrderWithoutRecusion(BinaryTreeNode<T>* root, int* arr) {
-		int i = 0;
+	
+	//非递归后序遍历
+	void PostOrderWithoutRecusion(BinaryTreeNode<T>* root) {
 		stack<BinaryTreeNode<T>*> nodeStack;
 		BinaryTreeNode<T>* pointer = root;
 		BinaryTreeNode<T>*pre = root;
-		a[i] = 0;
 		while (pointer) {
 			for (; pointer->getLeftChild() != NULL; pointer = pointer->getLeftChild()) {
 				nodeStack.push(pointer);
-				a[i]++;
 			}
-			while (pointer != NULL && (pointer->getRightChild == NULL || pointer->getRightChild == pre)) {
-				a[i]++;
+			while (pointer != NULL && (pointer->getRightChild() == NULL || pointer->getRightChild() == pre)) {
+				cout << pointer->getValue();
 				pre = pointer;
 				if (nodeStack.empty())
 					return;
@@ -206,11 +261,10 @@ public:
 				nodeStack.pop();
 			}
 			nodeStack.push(pointer);
-			i++;
-			a[i] = a[i - 1] - 1;
+	
 			pointer = pointer->getRightChild();
 		}
-
+		cout << endl;
 	}
 	bool isBinaryTree(BinaryTreeNode<T>* root) {
 		queue<BinaryTreeNode<T>*> tA;
@@ -368,7 +422,25 @@ public:
 			cout << "show tree in pre order." << endl;
 			tree.preOrderForShow(GrandPa);
 			cout << endl;
-			//pan duan wan quan
+			cout << "show tree in PreOrderWithoutRecusion." << endl;
+			tree.PreOrderWithoutRecusion(GrandPa);
+			cout << endl;
+			cout << "show tree in in order." << endl;
+			tree.inOrderForShow(GrandPa);
+			cout << endl;
+			cout << "show tree in InOrderWithoutRecursion." << endl;
+			tree.InOrderWithoutRecusion(GrandPa);
+			cout << endl;
+			cout << "show tree in Post Order." << endl;
+			tree.postOrderForShow(GrandPa);
+			cout << endl;
+			cout << "show tree in PostOrderWithoutRecusion." << endl;
+			tree.PostOrderWithoutRecusion(GrandPa);
+			cout << endl;
+			cout << "show tree in levelOrder." << endl;
+			tree.levelOrder(GrandPa);
+			cout << endl;
+			//判断是否完全二叉树
 			cout << "Is it a complete tree?" << endl;
 			if (ComplateTree2(GrandPa)) {
 				cout << "Yes" << endl;
@@ -405,7 +477,7 @@ public:
 			tree.preOrderDel(GrandPa);
 			tree.preOrderForShow(GrandPa);
 			cout << endl;
-			//pan duan wan quan
+			//判断是否完全二叉树
 			cout << "Is it a complete tree?" << endl;
 			if (ComplateTree2(GrandPa)) {
 				cout << "Yes" << endl;
